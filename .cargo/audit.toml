@@ -1,0 +1,20 @@
+# cargo-audit configuration (must live at .cargo/audit.toml; root audit.toml is NOT read). CI runs plain `cargo audit`, which fails on any
+# matching advisory. Entries below are ONLY for advisories with no fixed
+# version available (verified 2026-09-19); anything fixable must be fixed by
+# bumping, not by ignoring (see rustls 0.23.43 -> 0.23.45 in Cargo.lock).
+[advisories]
+ignore = [
+    # RUSTSEC-2023-0071 (rsa, Marvin timing side-channel): advisory states
+    # `patched = []` - latest rsa 0.9.10 still affected. rsa is only pulled
+    # in via sqlx-mysql; this bot uses SQLite. Revisit if rsa ships a fix.
+    "RUSTSEC-2023-0071",
+    # rustls-webpki 0.102.8 (via rustls 0.22 <- tokio-rustls 0.25 /
+    # tungstenite 0.21, pinned by serenity 0.12): fixes exist only on the
+    # 0.103 line, which rustls 0.22 (req ^0.102.1) cannot use. All four need a
+    # malicious CA / misissuance or CRL use; the bot is a TLS client that does
+    # not use CRLs. Revisit with the serenity upgrade.
+    "RUSTSEC-2026-0049",
+    "RUSTSEC-2026-0098",
+    "RUSTSEC-2026-0099",
+    "RUSTSEC-2026-0104",
+]
