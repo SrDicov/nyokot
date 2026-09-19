@@ -1,4 +1,4 @@
-# cargo-audit configuration. CI runs plain `cargo audit`, which fails on any
+# cargo-audit configuration (must live at .cargo/audit.toml; root audit.toml is NOT read). CI runs plain `cargo audit`, which fails on any
 # matching advisory. Entries below are ONLY for advisories with no fixed
 # version available (verified 2026-09-19); anything fixable must be fixed by
 # bumping, not by ignoring (see rustls 0.23.43 -> 0.23.45 in Cargo.lock).
